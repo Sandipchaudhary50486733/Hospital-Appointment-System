@@ -14,7 +14,7 @@
                 <a href="{{ route('public.doctors') }}" class="border border-white text-white font-bold text-sm rounded-lg px-6 py-3.5 hover:bg-white/10">Find a Doctor</a>
             </div>
         </div>
-        <img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0"
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQodEeSXly0r7UR6npCohqtBt9SNBhmp_1cTUOLOn-Gg&s=10"
              alt="Doctor with patient" class="w-full h-80 object-cover rounded-3xl shadow-2xl">
     </div>
 </section>

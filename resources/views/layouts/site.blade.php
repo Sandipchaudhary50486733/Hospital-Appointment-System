@@ -59,14 +59,14 @@
         <div>
             <h4 class="text-white font-bold mb-3">Contact</h4>
             <div class="flex flex-col gap-2 text-sm text-slate-400">
-                <span><i class="fa-solid fa-phone mr-2"></i>(555) 010-2345</span>
+                <span><i class="fa-solid fa-phone mr-2"></i> +977 **********</span>
                 <span><i class="fa-solid fa-envelope mr-2"></i>care@meridianhealth.test</span>
-                <span><i class="fa-solid fa-location-dot mr-2"></i>120 Wellness Ave, Springfield</span>
+                <span><i class="fa-solid fa-location-dot mr-2"></i>Itahari, Nepal</span>
             </div>
         </div>
     </div>
     <div class="border-t border-slate-800 text-center text-xs text-slate-500 py-5">
-        &copy; {{ date('Y') }} Meridian Health. For medical emergencies, call 911.
+        &copy; {{ date('Y') }} Meridian Health. For medical emergencies, call 102.
     </div>
 </footer>
 

@@ -12,7 +12,7 @@
             <div class="flex flex-col gap-5">
                 <div class="flex gap-3.5 items-start">
                     <i class="fa-solid fa-phone text-brand-500 mt-0.5"></i>
-                    <div><p class="font-bold text-sm">Phone</p><p class="text-sm text-slate-500">(555) 010-2345</p></div>
+                    <div><p class="font-bold text-sm">Phone</p><p class="text-sm text-slate-500">+977 ********</p></div>
                 </div>
                 <div class="flex gap-3.5 items-start">
                     <i class="fa-solid fa-envelope text-brand-500 mt-0.5"></i>
@@ -20,12 +20,12 @@
                 </div>
                 <div class="flex gap-3.5 items-start">
                     <i class="fa-solid fa-location-dot text-brand-500 mt-0.5"></i>
-                    <div><p class="font-bold text-sm">Address</p><p class="text-sm text-slate-500">120 Wellness Ave, Springfield</p></div>
+                    <div><p class="font-bold text-sm">Address</p><p class="text-sm text-slate-500">Itahari, Nepal</p></div>
                 </div>
             </div>
 
             <div class="mt-8 bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-700">
-                For medical emergencies, call 911 or go to your nearest emergency room.
+                For medical emergencies, call 102 or go to your nearest emergency room.
             </div>
         </div>
 
