@@ -5,8 +5,7 @@ window.Swal = Swal;
 
 /**
  * Reads #flash-data (rendered server-side in layouts) and fires the
- * matching SweetAlert automatically on page load — success/status,
- * validation errors, and session-flashed errors.
+ * matching SweetAlert automatically on page load.
  */
 document.addEventListener('DOMContentLoaded', () => {
     const flash = document.getElementById('flash-data');
@@ -17,28 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (status) {
         Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: status,
-            confirmButtonColor: '#0d6efd',
-            timer: 4000,
-            timerProgressBar: true,
+            icon: 'success', title: 'Success', text: status,
+            confirmButtonColor: '#0d6efd', timer: 4000, timerProgressBar: true,
         });
     }
-
     if (error) {
         Swal.fire({
-            icon: 'error',
-            title: 'Something needs your attention',
-            text: error,
+            icon: 'error', title: 'Something needs your attention', text: error,
             confirmButtonColor: '#0d6efd',
         });
     }
 });
 
 /**
- * Attach to any <form data-confirm="Are you sure?"> to intercept submit
- * with a SweetAlert confirmation dialog before it actually posts.
+ * <form data-confirm="Are you sure?"> is intercepted with a SweetAlert
+ * confirmation dialog before it actually submits.
  */
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('form[data-confirm]').forEach((form) => {
@@ -61,6 +53,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+    });
+});
+
+/**
+ * Generic dropdown menu toggle.
+ * Any button with data-dropdown-toggle="#menu-id" shows/hides the element
+ * with that id. Clicking anywhere outside an open dropdown closes it.
+ * Works for any number of independent dropdowns on the same page.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-dropdown-toggle]').forEach((btn) => {
+        const targetSelector = btn.getAttribute('data-dropdown-toggle');
+        const menu = document.querySelector(targetSelector);
+        if (!menu) return;
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !menu.classList.contains('hidden');
+            // Close any other open dropdowns first.
+            document.querySelectorAll('[data-dropdown-menu]').forEach((m) => m.classList.add('hidden'));
+            menu.classList.toggle('hidden', isOpen);
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.querySelectorAll('[data-dropdown-menu]').forEach((m) => m.classList.add('hidden'));
+    });
+
+    // Prevent clicks inside the dropdown menu from closing it immediately.
+    document.querySelectorAll('[data-dropdown-menu]').forEach((menu) => {
+        menu.addEventListener('click', (e) => e.stopPropagation());
     });
 });
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
+use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -48,7 +49,6 @@ Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
 
-    // Submit a rating for a completed appointment.
     Route::post('/appointments/{appointment}/rating', [RatingController::class, 'store'])->name('appointments.rating.store');
 });
 
@@ -71,4 +71,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::get('/appointments', [AdminAppointmentController::class, 'index'])->name('appointments.index');
     Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+
+    Route::get('/settings', [AdminSettingsController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
 });

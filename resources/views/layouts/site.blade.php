@@ -27,10 +27,40 @@
             <a href="{{ route('public.doctors') }}" class="px-3.5 py-2 rounded-lg {{ request()->routeIs('public.doctors') ? 'bg-brand-50 text-brand-700' : 'text-slate-600 hover:bg-slate-50' }}">Doctors</a>
             <a href="{{ route('public.contact') }}" class="px-3.5 py-2 rounded-lg {{ request()->routeIs('public.contact') ? 'bg-brand-50 text-brand-700' : 'text-slate-600 hover:bg-slate-50' }}">Contact Us</a>
         </nav>
+
         <div class="flex items-center gap-3">
             @auth
                 @php $u = auth()->user(); @endphp
-                <a href="{{ $u->isAdmin() ? route('admin.dashboard') : ($u->isDoctor() ? route('doctor.appointments.index') : route('home')) }}" class="btn-primary">My Dashboard</a>
+
+                @if ($u->isAdmin())
+                    {{-- Profile dropdown: Dashboard / Settings / Sign out --}}
+                    <div class="relative">
+                        <button type="button" data-dropdown-toggle="#admin-profile-menu"
+                                class="flex items-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg px-4 py-2.5 text-sm font-semibold text-slate-700">
+                            <i class="fa-solid fa-user-circle text-brand-500"></i>
+                            My Profile
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                        </button>
+                        <div id="admin-profile-menu" data-dropdown-menu
+                             class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-lg shadow-lg py-1.5 z-30">
+                            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
+                                <i class="fa-solid fa-gauge w-4 text-slate-400"></i> Dashboard
+                            </a>
+                            <a href="{{ route('admin.settings.edit') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50">
+                                <i class="fa-solid fa-gear w-4 text-slate-400"></i> Settings
+                            </a>
+                            <div class="border-t border-slate-100 my-1"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full text-left flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50">
+                                    <i class="fa-solid fa-arrow-right-from-bracket w-4"></i> Sign out
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ $u->isDoctor() ? route('doctor.appointments.index') : route('home') }}" class="btn-primary">My Dashboard</a>
+                @endif
             @else
                 <a href="{{ route('login') }}" class="text-brand-500 border border-brand-500 hover:bg-brand-50 font-semibold text-sm rounded-lg px-4 py-2.5">Sign In</a>
                 <a href="{{ route('register') }}" class="btn-primary">Register</a>
@@ -59,14 +89,14 @@
         <div>
             <h4 class="text-white font-bold mb-3">Contact</h4>
             <div class="flex flex-col gap-2 text-sm text-slate-400">
-                <span><i class="fa-solid fa-phone mr-2"></i> +977 **********</span>
+                <span><i class="fa-solid fa-phone mr-2"></i>(555) 010-2345</span>
                 <span><i class="fa-solid fa-envelope mr-2"></i>care@meridianhealth.test</span>
-                <span><i class="fa-solid fa-location-dot mr-2"></i>Itahari, Nepal</span>
+                <span><i class="fa-solid fa-location-dot mr-2"></i>120 Wellness Ave, Springfield</span>
             </div>
         </div>
     </div>
     <div class="border-t border-slate-800 text-center text-xs text-slate-500 py-5">
-        &copy; {{ date('Y') }} Meridian Health. For medical emergencies, call 102.
+        &copy; {{ date('Y') }} Meridian Health. For medical emergencies, call 911.
     </div>
 </footer>
 

@@ -11,17 +11,11 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Show the login form.
-     */
     public function create(): View
     {
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming login request.
-     */
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
@@ -30,8 +24,11 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
+        // Admins land on the public site (like any visitor) and access
+        // their tools via the profile dropdown, rather than being dropped
+        // straight into the admin panel.
         $destination = match (true) {
-            $user->isAdmin()  => route('admin.dashboard', absolute: false),
+            $user->isAdmin()  => route('public.home', absolute: false),
             $user->isDoctor() => route('doctor.appointments.index', absolute: false),
             default           => route('home', absolute: false),
         };
@@ -39,9 +36,6 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended($destination);
     }
 
-    /**
-     * Log the user out.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
