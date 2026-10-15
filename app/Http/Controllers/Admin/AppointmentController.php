@@ -11,7 +11,7 @@ class AppointmentController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = Appointment::with(['user', 'doctor']);
+        $query = Appointment::with(['user', 'doctor.hospital']);
 
         if ($status = $request->query('status')) {
             $query->where('status', $status);

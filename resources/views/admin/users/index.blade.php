@@ -1,9 +1,9 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
 @section('title', 'Users — Meridian Health')
 
 @section('content')
-<main class="max-w-5xl mx-auto px-6 py-10">
+<main class="max-w-5xl mx-auto px-8 py-10">
 
     <h1 class="text-2xl font-extrabold mb-1">Users</h1>
     <p class="text-sm text-slate-500 mb-6">Patients and doctors registered on the platform.</p>
@@ -17,24 +17,19 @@
         <table class="w-full text-sm">
             <thead>
                 <tr class="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-100">
-                    <th class="py-2.5 pr-3">Name</th>
-                    <th class="py-2.5 pr-3">Email</th>
-                    <th class="py-2.5 pr-3">Phone</th>
-                    <th class="py-2.5">Joined</th>
+                    <th class="py-2.5 pr-3">Name</th><th class="py-2.5 pr-3">Email</th><th class="py-2.5 pr-3">Phone</th><th class="py-2.5">Joined</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($users as $user)
-                <tr class="border-b border-slate-50 last:border-0">
-                    <td class="py-3 pr-3 font-semibold">{{ $user->name }}</td>
-                    <td class="py-3 pr-3">{{ $user->email }}</td>
-                    <td class="py-3 pr-3">{{ $user->phone ?? '—' }}</td>
-                    <td class="py-3 text-xs">{{ $user->created_at->format('M j, Y') }}</td>
-                </tr>
+                    <tr class="border-b border-slate-50 last:border-0">
+                        <td class="py-3 pr-3 font-semibold">{{ $user->name }}</td>
+                        <td class="py-3 pr-3">{{ $user->email }}</td>
+                        <td class="py-3 pr-3">{{ $user->phone ?? '—' }}</td>
+                        <td class="py-3 text-xs">{{ $user->created_at->format('M j, Y') }}</td>
+                    </tr>
                 @empty
-                <tr>
-                    <td colspan="4" class="text-center text-sm text-slate-500 py-8">No {{ $role }}s yet.</td>
-                </tr>
+                    <tr><td colspan="4" class="text-center text-sm text-slate-500 py-8">No {{ $role }}s yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

@@ -18,6 +18,7 @@ class User extends Authenticatable
         'role',
         'date_of_birth',
         'gender',
+        'image',
         'phone',
     ];
 
@@ -46,6 +47,13 @@ class User extends Authenticatable
     public function doctor(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Doctor::class);
+    }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image
+            ? route('media', ['path' => ltrim($this->image, '/')])
+            : null;
     }
 
     public function isDoctor(): bool

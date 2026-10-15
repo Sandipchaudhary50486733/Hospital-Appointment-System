@@ -1,28 +1,28 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
 @section('title', ($doctor->exists ? 'Edit' : 'Add') . ' Doctor — Meridian Health')
 
 @section('content')
-<main class="max-w-2xl mx-auto px-6 py-10">
+<main class="max-w-2xl mx-auto px-8 py-10">
+
+    @if ($errors->any())
+    <div class="banner error">@foreach ($errors->all() as $error){{ $error }}<br>@endforeach</div>
+    @endif
 
     <h1 class="text-2xl font-extrabold mb-1">{{ $doctor->exists ? 'Edit doctor' : 'Add a doctor' }}</h1>
     <p class="text-sm text-slate-500 mb-8">{{ $doctor->exists ? "Update this provider's profile." : 'Create a doctor profile visible on the public site.' }}</p>
 
     <div class="card">
-        <form method="POST" action="{{ $doctor->exists ? route('admin.doctors.update', $doctor) : route('admin.doctors.store') }}"
-              enctype="multipart/form-data" class="space-y-4">
+        <form method="POST" action="{{ $doctor->exists ? route('admin.doctors.update', $doctor) : route('admin.doctors.store') }}" enctype="multipart/form-data" class="space-y-4">
             @csrf
             @if ($doctor->exists) @method('PUT') @endif
 
             <div class="flex items-center gap-5">
-                <img id="imagePreview"
-                     src="{{ $doctor->image_url ?? 'https://ui-avatars.com/api/?name='.urlencode($doctor->name ?: 'Doctor').'&background=eef4ff&color=0d6efd' }}"
-                     alt="Preview" class="w-20 h-20 rounded-full object-cover border border-slate-200">
+                <img id="imagePreview" src="{{ $doctor->image_url ?? 'https://ui-avatars.com/api/?name='.urlencode($doctor->name ?: 'Doctor').'&background=eef4ff&color=0d6efd' }}" alt="Preview" class="w-20 h-20 rounded-full object-cover border border-slate-200">
                 <div class="flex-1">
                     <label class="field-label">Profile photo</label>
-                    <input type="file" name="image" accept="image/*" data-preview-target="#imagePreview"
-                           class="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:text-xs hover:file:bg-brand-100">
-                    <p class="text-xs text-slate-400 mt-1">JPG, PNG, or WEBP. Max 2MB. Stored in <code>storage/app/public/doctors</code> — only the file path is saved to the database.</p>
+                    <input type="file" name="image" accept="image/*" data-preview-target="#imagePreview" class="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:text-xs hover:file:bg-brand-100">
+                    <p class="text-xs text-slate-400 mt-1">JPG, PNG, or WEBP. Max 2MB.</p>
                 </div>
             </div>
             @error('image')<p class="text-red-600 text-xs">{{ $message }}</p>@enderror
@@ -33,6 +33,23 @@
                 @error('name')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
 
+            <div>
+                <label class="field-label">Hospital</label>
+
+                <select name="hospital_id" class="field-input">
+                    <option value="">Select a hospital</option>
+
+                    @foreach ($hospitals as $hospital)
+                    <option value="{{ $hospital->id }}" {{ old('hospital_id', $doctor->hospital_id) == $hospital->id ? 'selected' : '' }}>
+                        {{ $hospital->name }}
+                    </option>
+                    @endforeach
+                </select>
+
+                @error('hospital_id')
+                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
             <div class="grid grid-cols-2 gap-3">
                 <div>
                     <label class="field-label">Specialization</label>
@@ -57,10 +74,10 @@
             </div>
 
             @if ($doctor->exists)
-                <label class="flex items-center gap-2 font-semibold text-sm cursor-pointer">
-                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $doctor->is_active) ? 'checked' : '' }} class="rounded text-brand-500">
-                    Active (visible for booking)
-                </label>
+            <label class="flex items-center gap-2 font-semibold text-sm cursor-pointer">
+                <input type="checkbox" name="is_active" value="1" {{ old('is_active', $doctor->is_active) ? 'checked' : '' }} class="rounded text-brand-500">
+                Active (visible for booking)
+            </label>
             @endif
 
             <button type="submit" class="btn-primary w-full py-3">{{ $doctor->exists ? 'Save changes' : 'Create doctor' }}</button>

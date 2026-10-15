@@ -108,6 +108,18 @@ return [
     |
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact form notifications
+    |--------------------------------------------------------------------------
+    |
+    | Address(es) that get an email for every contact-form message, comma
+    | separated. Leave empty to notify every admin account instead.
+    |
+    */
+
+    'contact_to' => env('CONTACT_NOTIFY_EMAIL'),
+
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),

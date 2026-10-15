@@ -34,11 +34,11 @@
                 @csrf
                 <div>
                     <label class="field-label">Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" required class="field-input">
+                    <input type="text" name="name" value="{{ old('name', auth()->user()?->name) }}" required class="field-input">
                 </div>
                 <div>
                     <label class="field-label">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" required class="field-input">
+                    <input type="email" name="email" value="{{ old('email', auth()->user()?->email) }}" required class="field-input">
                 </div>
                 <div>
                     <label class="field-label">Subject (optional)</label>

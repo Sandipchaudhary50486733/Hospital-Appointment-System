@@ -20,10 +20,12 @@ class DoctorManageRequest extends FormRequest
             'name'            => ['required', 'string', 'max:150'],
             'specialization'  => ['required', 'string', 'max:100'],
             'license_number'  => ['required', 'string', 'max:50', Rule::unique('doctors', 'license_number')->ignore($doctorId)],
+            'hospital_id' => ['required', 'exists:hospitals,id'],
             'email'           => ['nullable', 'email', 'max:255'],
             'bio'             => ['nullable', 'string', 'max:1000'],
             'image'           => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'is_active'       => ['sometimes', 'boolean'],
+            
         ];
     }
 }

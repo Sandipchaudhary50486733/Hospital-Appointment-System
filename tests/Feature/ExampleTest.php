@@ -1,19 +1,14 @@
 <?php
 
-namespace Tests\Feature;
-
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
-}
+it('loads the public pages', function (string $route) {
+    $this->get(route($route))->assertOk();
+})->with([
+    'public.home',
+    'public.about',
+    'public.services',
+    'public.doctors',
+    'public.contact',
+    'login',
+    'register',
+    'register.doctor',
+]);

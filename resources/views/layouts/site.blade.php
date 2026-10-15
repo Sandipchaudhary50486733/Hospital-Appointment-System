@@ -8,10 +8,10 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans">
 
-@if (session('status') || $errors->any())
+@if (session('status') || session('error') || $errors->any())
     <div id="flash-data"
          @if(session('status')) data-status="{{ session('status') }}" @endif
-         @if($errors->any()) data-error="{{ $errors->first() }}" @endif
+         @if(session('error') || $errors->any()) data-error="{{ session('error') ?? $errors->first() }}" @endif
          class="hidden"></div>
 @endif
 
@@ -27,7 +27,7 @@
             <a href="{{ route('public.doctors') }}" class="px-3.5 py-2 rounded-lg {{ request()->routeIs('public.doctors') ? 'bg-brand-50 text-brand-700' : 'text-slate-600 hover:bg-slate-50' }}">Doctors</a>
             <a href="{{ route('public.contact') }}" class="px-3.5 py-2 rounded-lg {{ request()->routeIs('public.contact') ? 'bg-brand-50 text-brand-700' : 'text-slate-600 hover:bg-slate-50' }}">Contact Us</a>
         </nav>
-
+        
         <div class="flex items-center gap-3">
             @auth
                 @php $u = auth()->user(); @endphp
@@ -89,9 +89,9 @@
         <div>
             <h4 class="text-white font-bold mb-3">Contact</h4>
             <div class="flex flex-col gap-2 text-sm text-slate-400">
-                <span><i class="fa-solid fa-phone mr-2"></i>(555) 010-2345</span>
+                <span><i class="fa-solid fa-phone mr-2"></i>+977**********</span>
                 <span><i class="fa-solid fa-envelope mr-2"></i>care@meridianhealth.test</span>
-                <span><i class="fa-solid fa-location-dot mr-2"></i>120 Wellness Ave, Springfield</span>
+                <span><i class="fa-solid fa-location-dot mr-2"></i>Itahari, Sunsari</span>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ class Doctor extends Model
 {
     protected $fillable = [
         'user_id',
+        'hospital_id',
         'name',
         'specialization',
         'license_number',
@@ -30,6 +31,11 @@ class Doctor extends Model
         return $this->hasMany(Appointment::class);
     }
 
+    public function availabilities()
+    {
+        return $this->hasMany(DoctorAvailability::class);
+    }
+
     public function ratings()
     {
         return $this->hasMany(Rating::class);
@@ -40,16 +46,20 @@ class Doctor extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Builds a usable image URL from the stored file path, or null if the
-    // doctor has no photo uploaded.
-    public function getImageUrlAttribute()
+    public function hospital()
     {
-        return $this->image ? Storage::disk('public')->url($this->image) : null;
+        return $this->belongsTo(Hospital::class);
     }
 
-    // Average of all ratings for this doctor, rounded to 1 decimal place.
-    // Returns null if nobody has rated this doctor yet, so views can show
-    // "No ratings yet" instead of a misleading 0.0.
+    public function getImageUrlAttribute()
+    {
+        // Served by MediaController, so it works with or without the
+        // public/storage symlink and with any APP_URL / port.
+        return $this->image
+            ? route('media', ['path' => ltrim($this->image, '/')])
+            : null;
+    }
+
     public function getAverageRatingAttribute()
     {
         $average = $this->ratings()->avg('rating');
@@ -57,9 +67,9 @@ class Doctor extends Model
         return $average ? round($average, 1) : null;
     }
 
-    // How many ratings this doctor has received in total.
     public function getRatingsCountAttribute()
     {
         return $this->ratings()->count();
     }
 }
+

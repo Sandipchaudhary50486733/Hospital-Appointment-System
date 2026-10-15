@@ -1,9 +1,9 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
 @section('title', 'Account Settings — Meridian Health')
 
 @section('content')
-<main class="max-w-xl mx-auto px-6 py-10">
+<main class="max-w-xl mx-auto px-8 py-10">
 
     @if (session('status'))
         <div class="banner">{{ session('status') }}</div>
@@ -32,7 +32,6 @@
 
             <div class="border-t border-slate-100 pt-4 mt-2">
                 <p class="text-xs font-semibold text-slate-500 mb-3">Leave blank to keep your current password</p>
-
                 <div class="mb-3">
                     <label class="field-label">New password</label>
                     <input type="password" name="password" class="field-input" autocomplete="new-password">

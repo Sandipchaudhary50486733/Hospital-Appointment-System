@@ -10,7 +10,6 @@
         @if (is_string($element))
             <span class="px-2.5 py-1.5 text-slate-400 text-sm">{{ $element }}</span>
         @endif
-
         @if (is_array($element))
             @foreach ($element as $page => $url)
                 @if ($page == $paginator->currentPage())

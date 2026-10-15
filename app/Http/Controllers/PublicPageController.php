@@ -26,20 +26,30 @@ class PublicPageController extends Controller
     }
 
     public function doctors(Request $request): View
-    {
-        $query = Doctor::where('is_active', true);
+{
+    $query = Doctor::with('hospital')
+        ->where('is_active', true);
 
-        if ($search = $request->query('q')) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('specialization', 'like', "%{$search}%");
-            });
-        }
-
-        $doctors = $query->orderBy('name')->paginate(9)->withQueryString();
-
-        return view('public.doctors', compact('doctors', 'search'));
+    if ($search = $request->query('q')) {
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('specialization', 'like', "%{$search}%");
+        });
     }
+
+    $doctors = $query->orderBy('name')->paginate(9)->withQueryString();
+
+    return view('public.doctors', compact('doctors', 'search'));
+}
+
+    public function doctor(Doctor $doctor): View
+{
+    abort_unless($doctor->is_active, 404);
+
+    $doctor->load('hospital');
+
+    return view('public.doctor', compact('doctor'));
+}
 
     public function contact(): View
     {

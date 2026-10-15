@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $averageRating = Rating::avg('rating');
         $averageRating = $averageRating ? round($averageRating, 1) : null;
 
-        $recentAppointments = Appointment::with(['user', 'doctor'])
+       $recentAppointments = Appointment::with(['user', 'doctor.hospital'])
             ->latest()
             ->take(8)
             ->get();

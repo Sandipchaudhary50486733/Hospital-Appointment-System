@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DoctorAvailability;
 
 class Appointment extends Model
 {
@@ -15,6 +16,7 @@ class Appointment extends Model
         'contact_number',
         'type',
         'status',
+        'doctor_availability_id',
     ];
 
     protected function casts()
@@ -32,6 +34,10 @@ class Appointment extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);
+    }
+
+    public function doctorAvailability(){
+        return $this->belongsTo(DoctorAvailability::class, 'doctor_availability_id');
     }
 
     // A completed appointment can have at most one rating attached to it.
